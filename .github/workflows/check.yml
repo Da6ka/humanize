@@ -1,0 +1,40 @@
+name: Check skill
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - name: Check skill frontmatter and local links
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          root = Path('.')
+          for name in ('SKILL.md', 'patterns.md', 'regression-tests.md', 'LICENSE-humanizer'):
+              if not (root / name).is_file():
+                  raise SystemExit(f'Missing {name}')
+
+          skill = (root / 'SKILL.md').read_text(encoding='utf-8')
+          frontmatter = re.match(r'^---\n(.*?)\n---\n', skill, re.S)
+          if not frontmatter or not re.search(r'^name: humanize$', frontmatter[1], re.M):
+              raise SystemExit('SKILL.md needs humanize frontmatter')
+          if not re.search(r'^description: \S.+$', frontmatter[1], re.M):
+              raise SystemExit('SKILL.md needs a description')
+
+          for page in root.glob('*.md'):
+              for target in re.findall(r'\]\(([^)#]+)(?:#[^)]*)?\)', page.read_text(encoding='utf-8')):
+                  if '://' not in target and not (page.parent / target).is_file():
+                      raise SystemExit(f'{page}: missing link target {target}')
+          PY
