@@ -1,28 +1,21 @@
 # Humanize
 
-Humanize помогает сделать письмо, пост или сообщение проще и естественнее на русском и английском. Скилл даёт Codex или Claude правила редактуры, чтобы из текста уходили канцелярит и шаблонные фразы, а факты, цитаты и оговорки сохранялись.
+Humanize помогает редактировать письма, посты и сообщения в Claude на русском и английском. Скилл убирает канцелярит и шаблонные фразы, сохраняя факты, цитаты и оговорки. Humanize также совместим с Codex.
 
-## Установка без терминала
+## Установка в Claude в браузере
 
-Скачайте архив, распакуйте его и переименуйте папку `humanize-main` в `humanize`. Файлы `SKILL.md` и `patterns.md` должны лежать прямо в этой папке. [Скачать ZIP](https://github.com/Da6ka/humanize/archive/refs/heads/main.zip)
+1. Скачайте архив и распакуйте его. Переименуйте папку `humanize-main` в `humanize`. Файлы `SKILL.md` и `patterns.md` лежат внутри неё. [Скачать ZIP](https://github.com/Da6ka/humanize/archive/refs/heads/main.zip)
+2. Нажмите правой кнопкой мыши на папку `humanize` и создайте новый ZIP. Внутри нового архива должна быть папка `humanize` с файлами скилла.
+3. На Claude.ai откройте **Settings > Capabilities** и включите **Code execution and file creation**. Настройка также может называться **Create and edit files**.
+4. Откройте **Customize > Skills**, нажмите **+**, выберите **Create skill > Upload a skill** и загрузите новый ZIP. Проверьте, что `humanize` появился в списке и включён. Если в рабочем аккаунте нет кнопки загрузки, уточните у администратора, разрешены ли пользовательские скиллы. [Инструкция Claude по загрузке скиллов](https://support.claude.com/en/articles/12512180-use-skills-in-claude)
 
-### Codex на компьютере или Claude Code
+## Как пользоваться Humanize в Claude
 
-1. Откройте домашнюю папку. На macOS в Finder нажмите `Cmd+Shift+G`, введите `~` и нажмите Enter. Чтобы показать скрытые папки, нажмите `Cmd+Shift+.`. На Windows введите `%USERPROFILE%` в адресной строке Проводника и нажмите Enter.
-2. Для Codex откройте `.agents`, для Claude Code откройте `.claude`. Внутри откройте `skills`. Создайте недостающие папки и перенесите всю папку `humanize` в `skills`.
-3. В новом чате Codex наберите `$humanize` и выберите скилл из подсказок. В Claude Code введите `/humanize`. Если скилл не появился, перезапустите приложение и проверьте, что `SKILL.md` лежит в `.agents/skills/humanize` для Codex или в `.claude/skills/humanize` для Claude Code. [Документация Codex](https://learn.chatgpt.com/docs/build-skills#where-codex-loads-local-skills) · [Документация Claude Code](https://code.claude.com/docs/en/skills#choose-where-skills-load)
-
-### Claude в браузере
-
-1. Нажмите правой кнопкой мыши на переименованную папку `humanize` и создайте ZIP-архив. Внутри нового архива должна быть папка `humanize` с файлами скилла.
-2. На Claude.ai откройте **Settings > Capabilities** и включите **Code execution and file creation**. В новом интерфейсе эта настройка может называться **Create and edit files**.
-3. Откройте **Customize > Skills**, нажмите **+**, выберите **Create skill > Upload a skill** и загрузите новый ZIP. Убедитесь, что `humanize` включён. Если загрузка недоступна в рабочем аккаунте, проверьте, разрешено ли добавлять свои скиллы. [Инструкция Claude по загрузке скиллов](https://support.claude.com/en/articles/12512180-use-skills-in-claude)
+Откройте новый чат и напишите «Используй скилл humanize». В том же сообщении вставьте черновик и скажите, что хотите изменить. Для первой пробы скопируйте любой блок «Запрос» ниже.
 
 ## Как работает Humanize: до и после
 
-Ниже два примера из работы со скиллом в Codex. Имена, компании, ссылки и детали ситуаций убраны или заменены.
-
-Чтобы попробовать, скопируйте любой блок «Запрос». В Codex добавьте его к `$humanize`, в Claude Code поставьте перед ним `/humanize`. В чате на Claude.ai сначала напишите «Используй скилл humanize», затем вставьте запрос в то же сообщение.
+Примеры взяты из реальной работы со скиллом. Имена, компании, ссылки и детали ситуаций убраны или заменены.
 
 ### На русском: сократить обратную связь после интервью
 
@@ -61,25 +54,15 @@ Write a short interview invitation. Thank the person for applying for the analys
 
 Потом подставьте свой черновик. Если важен тон, добавьте пожелание («сохрани обращение на вы») или приложите короткий образец своего текста. Перед отправкой перечитайте результат и сверьте факты с черновиком.
 
-## Установка через Git
+## Установка в Claude Code
 
-Если вы уже пользуетесь Git, можете выполнить одну из команд в терминале macOS или Linux.
+Перенесите распакованную папку `humanize` в `.claude/skills` внутри домашней папки. Если `.claude` или `skills` ещё нет, создайте их. Файл `SKILL.md` должен лежать в `.claude/skills/humanize`. В Claude Code введите `/humanize` и добавьте черновик или один из запросов выше. [Документация Claude Code о скиллах](https://code.claude.com/docs/en/skills#choose-where-skills-load)
 
-**Codex**
-
-```sh
-git clone https://github.com/Da6ka/humanize.git ~/.agents/skills/humanize
-```
-
-Откройте чат Codex и вызовите `$humanize`.
-
-**Claude Code**
+Если вы уже пользуетесь Git, можно установить скилл через терминал macOS или Linux.
 
 ```sh
 git clone https://github.com/Da6ka/humanize.git ~/.claude/skills/humanize
 ```
-
-В Claude Code введите `/humanize` и добавьте черновик.
 
 ## Как устроен скилл
 
